@@ -1,0 +1,21 @@
+
+
+get git
+http://git-scm.com/download/win
+
+
+git config --global user.name "XXXXXXX@yahoo.com"
+
+mkdir ~/Hello-World
+cd ~/Hello-World
+git init
+
+
+If you already had a repository ready to go, you'd just need to cd to that
+ directory and then run the git init command in there instead. Either way, 
+your local repository is ready to go and you can start committing code.
+
+touch README
+
+git add README
+git commit -m 'first commit'

@@ -1,0 +1,52 @@
+{
+  "name": "onionfront",
+  "version": "1.0.0",
+  "description": "big front end",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "big",
+    "front",
+    "end"
+  ],
+  "author": "contactsamie",
+  "license": "MIT",
+  "dependencies": {
+    "http-server": "~0.8.0",
+    "gulp": "^3.9.0"
+  },
+  "devDependencies": {
+    "event-stream": "^3.3.1",
+    "gulp-angular-templatecache": "^1.7.0",
+    "gulp-bower": "0.0.10",
+    "gulp-clean": "^0.3.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-connect": "^2.2.0",
+    "gulp-copy": "0.0.2",
+    "gulp-debug": "^2.0.1",
+    "gulp-header": "^1.7.1",
+    "gulp-html-replace": "^1.5.1",
+    "gulp-if": "^1.2.5",
+    "gulp-insert": "^0.5.0",
+    "gulp-just-replace": "^1.0.2",
+    "gulp-minify-css": "^1.2.0",
+    "gulp-minify-html": "^1.0.3",
+    "gulp-ngmin": "^0.3.0",
+    "gulp-processhtml": "^1.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace-task": "^0.2.1",
+    "gulp-sass": "^2.0.3",
+    "gulp-uglify": "^1.2.0",
+    "gulp-uglifycss": "^1.0.4",
+    "gulp-useref": "^1.3.0",
+    "gulp-util": "^3.0.6",
+    "gulp-webserver": "^0.9.1",
+    "merge-stream": "^1.0.0",
+    "run-sequence": "^1.1.2",
+    "spawn-cmd": "0.0.2",
+    "util": "^0.10.3",
+    "gulp-task-listing": "^1.0.1"
+  }
+}

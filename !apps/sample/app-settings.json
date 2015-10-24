@@ -1,0 +1,8 @@
+{
+	"dist": "dist",
+	"tmp":"tmp", 
+	"views":"views",
+	"fonts":"fonts",
+	"images":"images",
+	"appDir":"app"
+}
