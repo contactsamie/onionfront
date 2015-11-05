@@ -1,71 +1,79 @@
-var gulp = require('gulp');
-var spawn = require('spawn-cmd').spawn;
-var es = require('event-stream');
-var clean = require('gulp-clean');
-var runSequence = require('run-sequence');
-var fs = require('fs');
-var gulp = require('gulp');
-var taskListing = require('gulp-task-listing');
- 
-// Add a task to render the output 
-gulp.task('tasks', taskListing);
+var gulp = require("gulp");
+var spawn = require("spawn-cmd").spawn;
+var es = require("event-stream");
+var clean = require("gulp-clean");
+var runSequence = require("run-sequence");
+var chalk = require("chalk");
 
+var appConfig = require("./onion_components.json");
+var local_componentsMap = appConfig.local_components;
+var apps = appConfig.apps;
 
-var appsDir='!apps';
-var tasks = fs.readdirSync(appsDir).map(function(arg){
-	return appsDir+"/"+arg;
-});
-
-var appDirNames = fs.readdirSync(appsDir);
-
-var createTask = function (pathName) {
-    gulp.task(pathName, function (cb) {
-        spawn('gulp', ['--cwd', pathName], { stdio: 'inherit' }).on('exit', cb);       
+var createTask = function (taskName, pathName, cmd) {
+    console.log("setting up npm '" + cmd + "' task '" + pathName + "' .... ");
+    gulp.task(taskName, function (cb) {
+        console.log(chalk.yellow("performing npm tasks in " + pathName + " ...."));
+        spawn(cmd, ["--cwd", pathName], { stdio: "inherit" }).on("exit", cb);
     });
 };
-for (var i = 0; i < tasks.length; i++) {
-    createTask(tasks[i]);
+
+var npm_apps = [];
+var gulp_apps = [];
+for (var i = 0; i < apps.length; i++) {
+    var _app = apps[i];
+    var _npm = _app + "_npm";
+    var _gulp = _app + "_gulp";
+    createTask(_npm, apps[i], "npm install");
+    createTask(_gulp, apps[i], "gulp");
+    npm_apps.push(_npm);
+    gulp_apps.push(_gulp);
 }
-gulp.task('clean', function () {
-    var cleanTasks = [];
-    cleanTasks.push(gulp.src('dist', { read: false }).pipe(clean()));
-    for (var i = 0; i < tasks.length; i++) {
-        cleanTasks.push(gulp.src(tasks[i] + '/dist', { read: false }).pipe(clean()));
-        cleanTasks.push(gulp.src(tasks[i] + '/tmp', { read: false }).pipe(clean()));
+
+gulp.task("clean", function () {
+    var cleanApps = [];
+    cleanApps.push(gulp.src("dist", { read: false }).pipe(clean()));
+    for (var i = 0; i < apps.length; i++) {
+        console.log("cleaning dist & temp '" + apps[i] + "' .... ");
+        cleanApps.push(gulp.src(apps[i] + "/dist", { read: false }).pipe(clean()));
+        cleanApps.push(gulp.src(apps[i] + "/tmp", { read: false }).pipe(clean()));
     }
-    return es.concat.apply(null, cleanTasks);
-});
-gulp.task('build', ['clean'], function (callback) {
-    runSequence(tasks, callback);
+    for (var j = 0; j < local_componentsMap.dest.length; j++) {
+        console.log("cleaning local components '" + local_componentsMap.dest[j] + "' .... ");
+        cleanApps.push(gulp.src(local_componentsMap.dest[j], { read: false }).pipe(clean()));
+    }
+    return es.concat.apply(null, cleanApps);
 });
 
-gulp.task('default',['build'], function () {
+gulp.task("local_components", ["clean"], function () {
+    var localModuleApps = [];
+    console.log("Moving components from  '" + local_componentsMap.source + "' .... ");
+    for (var j = 0; j < local_componentsMap.dest.length; j++) {
+        console.log("To  '" + local_componentsMap.dest[j] + "' .... ");
+        localModuleApps.push(gulp.src(local_componentsMap.source).pipe(gulp.dest(local_componentsMap.dest[j])));
+    }
+    return es.concat.apply(null, localModuleApps);
+});
+
+gulp.task("build_npm", ["local_components"], function (callback) {
+    runSequence(npm_apps, callback);
+});
+gulp.task("build_gulp", ["build_npm"], function (callback) {
+    runSequence(gulp_apps, callback);
+});
+gulp.task("distribute_components", ["build_gulp"], function () {
+    var localComponentApps = [];
+    console.log("Moving components from  '" + local_componentsMap.source + "' .... ");
+    for (var j = 0; j < local_componentsMap.dist.length; j++) {
+        console.log("To  '" + local_componentsMap.dist[j] + "' .... ");
+        localComponentApps.push(gulp.src(local_componentsMap.source).pipe(gulp.dest(local_componentsMap.dist[j])));
+    }
+    return es.concat.apply(null, localComponentApps);
+});
+
+gulp.task("default", ["distribute_components"], function () {
     console.log("completed all task build ");
-    for (var i = 0; i < tasks.length; i++) {
-        gulp.src(tasks[i] + "/dist/**/*.*").pipe(gulp.dest('./dist/' + tasks[i]));
+    for (var i = 0; i < apps.length; i++) {
+        console.log("Pushing distributions for '" + apps[i] + "' to deployable .... ");
+        gulp.src(apps[i] + "/dist/**/*.*").pipe(gulp.dest("./dist/" + apps[i]));
     }
 });
-
-var webserver = require('gulp-webserver');
- console.log('creating drive-'+appDirNames[i])
- for (var i = 0; i < appDirNames.length; i++) {  
- gulp.task('drive-'+appDirNames[i], function() {
-  gulp.src("./"+appsDir+'/'+appDirNames[i]+'/app')
-    .pipe(webserver({
-      livereload: false,
-      directoryListing: false,
-	  port:8897,
-      open: true
-    }));
-});
-gulp.task('drive-dist-'+appDirNames[i], function() {
-  gulp.src(appsDir+'/'+appDirNames[i]+'/dist')
-    .pipe(webserver({
-      livereload: false,
-      directoryListing: false,
-	  port:8896,
-      open: true
-    }));
-});	
-}
- 

@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 (function() {
     var modules = [
     'ngAnimate',
@@ -21,7 +19,8 @@
     'ngDialog',
     'SignalR',
     'ui.bootstrap.datetimepicker',
-    'nvd3ChartDirectives'
+    'nvd3ChartDirectives',
+	   'endpoints'
     ];
     try {
         angular.module('views');
@@ -30,8 +29,6 @@
         return angular.module('onionfront', modules);
     }
 })() .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
-    
-
     $urlRouterProvider.otherwise("/");
     $httpProvider.defaults.useXDomain = true;
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
@@ -50,7 +47,6 @@
     $httpProvider.defaults.useXDomain = true;
 
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
-
 }).run(function (editableOptions, $rootScope, $state) {
     editableOptions.theme = 'bs3';
 
@@ -85,13 +81,10 @@
     $rootScope.$on('$stateChangeStart', function() {
         $rootScope.$emit('stateChangeStarted');
     });
-   
+
     $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
-
     });
-
 });
-
 
 angular.module('onionfront').factory("setCookie",function(){
 	return function (cname, cvalue, exdays) {
@@ -100,8 +93,6 @@ angular.module('onionfront').factory("setCookie",function(){
     var expires = "expires=" + d.toUTCString();
     document.cookie = cname + "=" + cvalue + "; " + expires;
 };
-
-	
 }).factory("getCookie",function(){
 	return function (cname) {
     var name = cname + "=";
@@ -113,10 +104,8 @@ angular.module('onionfront').factory("setCookie",function(){
     }
     return "";
 };
-	
 })
 .controller('index', function($scope, $state, serviceRequests, EndPoints, $rootScope) {
-	
 	}).directive('ngHtmlCompile', function($compile) {
         return {
             restrict: 'A',

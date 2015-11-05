@@ -1,18 +1,16 @@
 {
-  "name": "onionfront",
+  "name": "sandbox",
   "version": "1.0.0",
-  "description": "onionfront",
-  "main": "gulp.js",
-  "directories": {
-    "test": "test"
-  },
+  "description": "ui sandbox",
+  "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "onionfront"
+    "sand",
+    "box"
   ],
-  "author": "officialcommunity",
+  "author": "interface samuel",
   "license": "ISC",
   "dependencies": {
     "http-server": "~0.8.0",

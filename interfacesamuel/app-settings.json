@@ -1,6 +1,6 @@
 {
 	"dist": "dist",
-	"tmp":"tmp", 
+	"tmp":"tmp",
 	"views":"views",
 	"fonts":"fonts",
 	"images":"images",

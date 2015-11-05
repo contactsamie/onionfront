@@ -1,10 +1,10 @@
 ﻿<!doctype html>
-<html class="no-js" >
+<html class="no-js">
 <head>
     <meta charset="utf-8">
     <title></title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">    
+    <meta name="viewport" content="width=device-width">
 </head>
 <body>
     <!--[if lt IE 7]>
@@ -13,8 +13,8 @@
 	this is ng included
     <div data-ng-include="'views/test.html'"></div>
 	this is ui-view included
-    <div ui-view=""> </div>   
-   
+    <div ui-view=""> </div>
+
     <script>
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
@@ -37,15 +37,14 @@
     <link rel="stylesheet" href="bower_components/ngDialog/css/ngDialog-theme-default.css" />
     <link rel="stylesheet" href="bower_components/angular-bootstrap-datetimepicker/src/css/datetimepicker.css" />
     <link rel="stylesheet" href="bower_components/nvd3/build/nv.d3.css" />
-   
+
     <link rel="stylesheet" href="styles/animations.css">
     <link rel="stylesheet" href="styles/simple_line_icons.css">
-    <link rel="stylesheet" href="styles/source_sans_pro.css">    
+    <link rel="stylesheet" href="styles/source_sans_pro.css">
     <!-- endbuild -->
     <!-- build:js  scripts/js.js -->
     <script src="bower_components/jquery/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/jquery.easy-pie-chart/dist/angular.easypiechart.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-aria/angular-aria.js"></script>
@@ -73,15 +72,16 @@
     <script src="bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"></script>
     <script src="bower_components/d3/d3.js"></script>
     <script src="bower_components/nvd3/build/nv.d3.js"></script>
-    <script src="bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js"></script>    
+    <script src="bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js"></script>
     <!-- endbuild -->
 
     <!-- build:js  scripts/js-app.js -->
+ <script src="local_components/endpoints/endpoints.js"></script>
 
-    <script src="scripts/ng/app.js"></script> 
+    <script src="scripts/ng/app.js"></script>
     <!-- endbuild -->
-    
-    <script >
+
+    <script>
         angular.element(document).ready(function () {
             angular.bootstrap(document, ['onionfront']);
         });
